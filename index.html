@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<head>
+    <title>typing...</title>
+    <style>
+        body,
+        html,
+        .content {
+            height: 98vh;
+            font-family: monospace !important;
+            color: #aaa;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            border: none;
+            background: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .big {
+            font-size: 3rem;
+            color: black;
+        }
+
+        .input {
+            border-bottom: 1px dashed grey;
+        }
+
+        .input:focus {
+            border: none;
+            border-bottom: 1px dashed black;
+        }
+
+        .settings {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            padding: 1rem;
+        }
+
+        .log {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            padding: 1rem;
+        }
+
+
+        [contenteditable] {
+            outline: 0px solid transparent;
+        }
+
+        .list {
+            position: absolute;
+            top: 0;
+            right: 0;
+            overflow: scroll;
+            max-height: 90vh;
+            border-left: 1px dashed #aaa;
+            white-space: normal;
+        }
+
+        td {
+            text-align: right;
+            padding-left: 1rem;
+        }
+
+        td:nth-child(3) {
+            text-align: left;
+        }
+
+        @media (prefers-color-scheme: dark) {
+
+            html,
+            body {
+                color: #aaa;
+                background-color: #222;
+            }
+
+            .big {
+                color: white;
+            }
+
+            .input {
+                border-color: white !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tbody class="list hidden">
+            <tr>
+                <td>--time--</td>
+                <td>--delta--</td>
+                <td>------word------</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="content">
+        <div>
+            <div class="word big"></div>
+            <div contenteditable class="input big" autofocus><br /></div>
+        </div>
+    </div>
+    <button class="settings" onclick="settings()">settings</button>
+    <button class="log" onclick="toggleLog()">log</button>
+</body>
+
+<script>
+    const words = "his,that,was,for,are,with,they,one,have,this,from,hot,word,but,what,some,you,had,the,and,can,out,other,were,which,their,time,will,how,said,each,tell,does,set,three,want,air,well,also,play,small,end,put,home,read,hand,port,large,spell,add,even,land,here,must,big,high,such,follow,act,why,ask,men,change,went,light,kind,off,need,house,picture,try,again,animal,point,mother,world,near,build,self,earth,father,any,new,work,part,take,get,place,made,live,where,after,back,little,only,round,man,year,came,show,every,good,give,our,under,name,very,through,just,form,sentence,great,think,say,help,low,line,differ,turn,cause,much,mean,before,move,right,boy,old,too,same,she,all,there,when,use,your,way,about,many,then,them,write,would,like,these,her,long,make,thing,see,him,two,has,look,more,day,could,come,did,number,sound,most,people,over,know,water,than,call,first,who,may,down,side,been,now,find,head,stand,own,page,should,country,found,answer,school,grow,study,still,learn,plant,cover,food,sun,four,between,state,keep,eye,never,last,let,thought,city,tree,cross,farm,hard,start,might,story,saw,far,sea,draw,left,late,run,dont,while,press,close,night,real,life,few,north,book,carry,took,science,eat,room,friend,began,idea,fish,mountain,stop,once,base,hear,horse,cut,sure,watch,color,face,wood,main,open,seem,together,next,white,children,begin,got,walk,example,ease,paper,group,always,music,those,both,mark,often,letter,until,mile,river,car,feet,care,second,enough,plain,girl,usual,young,ready,above,ever,red,list,though,feel,talk,bird,soon,body,dog,family,direct,pose,leave,song,measure,door,product,black,short,numeral,class,wind,question,happen,complete,ship,area,half,rock,order,fire,south,problem,piece,told,knew,pass,since,top,whole,king,street,inch,multiply,nothing,course,stay,wheel,full,force,blue,object,decide,surface,deep,moon,island,foot,system,busy,test,record,boat,common,gold,possible,plane,stead,dry,wonder,laugh,thousand,ago,ran,check,game,shape,equate,hot,miss,brought,heat,snow,tire,bring,yes,distant,fill,east,paint,language,among,unit,power,town,fine,certain,fly,fall,lead,cry,dark,machine,note,wait,plan,figure,star,box,noun,field,rest,correct,able,pound,done,beauty,drive,stood,contain,front,teach,week,final,gave,green,quick,develop,ocean,warm,free,minute,strong,special,mind,behind,clear,tail,produce,fact,space,heard,best,hour,better,true,during,hundred,five,remember,step,early,hold,west,ground,interest,reach,fast,verb,sing,listen,six,table,travel,less,morning,ten,simple,several,vowel,toward,war,lay,against,pattern,slow,center,love,person,money,serve,appear,road,map,rain,rule,govern,pull,cold,notice,voice,energy,hunt,probable,bed,brother,egg,ride,cell,believe,perhaps,pick,sudden,count,square,reason,length,represent,art,subject,region,size,vary,settle,speak,weight,general,ice,matter,circle,pair,include,divide,syllable,felt,grand,ball,yet,wave,drop,heart,present,heavy,dance,engine,position,arm,wide,sail,material,fraction,forest,sit,race,window,store,summer,train,sleep,prove,lone,leg,exercise,wall,catch,mount,wish,sky,board,joy,winter,sat,written,wild,instrument,kept,glass,grass,cow,job,edge,sign,visit,past,soft,fun,bright,gas,weather,month,million,bear,finish,happy,hope,flower,clothe,strange,gone,trade,melody,trip,office,receive,row,mouth,exact,symbol,die,least,trouble,shout,except,wrote,seed,tone,join,suggest,clean,break,lady,yard,rise,bad,blow,oil,blood,touch,grew,cent,mix,team,wire,cost,lost,brown,wear,garden,equal,sent,choose,fell,fit,flow,fair,bank,collect,save,control,decimal,ear,else,quite,broke,case,middle,kill,son,lake,moment,scale,loud,spring,observe,child,straight,consonant,nation,dictionary,milk,speed,method,organ,pay,age,section,dress,cloud,surprise,quiet,stone,tiny,climb,cool,design,poor,lot,experiment,bottom,key,iron,single,stick,flat,twenty,skin,smile,crease,hole,jump,baby,eight,village,meet,root,buy,raise,solve,metal,whether,push,seven,paragraph,third,shall,held,hair,describe,cook,floor,either,result,burn,hill,safe,cat,century,consider,type,law,bit,coast,copy,phrase,silent,tall,sand,soil,roll,temperature,finger,industry,value,fight,lie,beat,excite,natural,view,sense,capital,wont,chair,danger,fruit,rich,thick,soldier,process,operate,practice,separate,difficult,doctor,please,protect,noon,crop,modern,element,hit,student,corner,party,supply,whose,locate,ring,character,insect,caught,period,indicate,radio,spoke,atom,human,history,effect,electric,expect,bone,rail,imagine,provide,agree,thus,gentle,woman,captain,guess,necessary,sharp,wing,create,neighbor,wash,bat,rather,crowd,corn,compare,poem,string,bell,depend,meat,rub,tube,famous,dollar,stream,fear,sight,thin,triangle,planet,hurry,chief,colony,clock,mine,tie,enter,major,fresh,search,send,yellow,gun,allow,print,dead,spot,desert,suit,current,lift,rose,arrive,master,track,parent,shore,division,sheet,substance,favor,connect,post,spend,chord,fat,glad,original,share,station,dad,bread,charge,proper,bar,offer,segment,slave,duck,instant,market,degree,populate,chick,dear,enemy,reply,drink,occur,support,speech,nature,range,steam,motion,path,liquid,log,meant,quotient,teeth,shell,neck,oxygen,sugar,death,pretty,skill,women,season,solution,magnet,silver,thank,branch,match,suffix,especially,fig,afraid,huge,sister,steel,discuss,forward,similar,guide,experience,score,apple,bought,led,pitch,coat,mass,card,band,rope,slip,win,dream,evening,condition,feed,tool,total,basic,smell,valley,nor,double,seat,continue,block,chart,hat,sell,success,company,subtract,event,particular,deal,swim,term,opposite,wife,shoe,shoulder,spread,arrange,camp,invent,cotton,born,determine,quart,nine,truck,noise,level,chance,gather,shop,stretch,throw,shine,property,column,molecule,select,wrong,gray,repeat,require,broad,prepare,salt,nose,plural,anger,claim,continent".split(',')
+
+    let THRESHOLD
+    const DEFAULT_SPEED = 40 // Beginner friendly - to understand how the app works
+    let DESIRED_SPEED = Number(localStorage.getItem('DESIRED_SPEED')) || DEFAULT_SPEED // WPM 
+
+    const setSpeed = (wpm) => {
+        DESIRED_SPEED = wpm
+        THRESHOLD = Math.floor(1000 / (DESIRED_SPEED * 5 / 60))
+        localStorage.setItem('DESIRED_SPEED', wpm)
+        document.querySelector('.settings').innerHTML = `${wpm} wpm`
+        console.log("You have ", THRESHOLD, "ms time for each individual character")
+    }
+
+    setSpeed(DESIRED_SPEED)
+    const settings = () => {
+        let temp = Number(prompt("What is your desired typing speed? (WPM)", DEFAULT_SPEED))
+        if (Number.isNaN(temp)) { settings() }
+        setSpeed(temp)
+    }
+
+    const once = (oldWord) => {
+        resetInput()
+        const nextWord = oldWord || sample(words)
+        setWord(nextWord)
+        let timer = undefined
+        const validate = (ev) => {
+            if (ev.key == 'Escape') {
+                once()
+            }
+            if (ev.key == 'Enter' || ev.key == ' ') { ev.preventDefault() }
+            if (!timer) {
+                timer = performance.now()
+            }
+
+            if ((ev.key == "Enter" || ev.key == " ") && nextWord == getInput()) {
+                const duration = Math.ceil(performance.now() - timer)
+                addToList(nextWord, duration)
+                document.querySelector(".input").removeEventListener('keydown', validate)
+
+                once(duration > THRESHOLD * nextWord.length ? nextWord : undefined)
+            }
+        }
+
+        document.querySelector(".input").addEventListener('keydown', validate)
+    }
+
+    const getInput = () =>
+        document.querySelector('.input').innerHTML.split(/<.?br.?.?>/)[0] // https://bugzilla.mozilla.org/show_bug.cgi?id=911201
+
+    const addToList = (word, time) => {
+        const list = document.querySelector('.list')
+        const temp = document.createElement('tr')
+        temp.innerHTML = `<td>${time}</td><td>${time - word.length * THRESHOLD}</td><td>${word}</td>`
+        list.prepend(temp)
+    }
+
+    const sample = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
+    const resetInput = () => {
+        document.querySelector('.input').innerHTML = "<br />"
+    }
+
+    const setWord = (word) => {
+        document.querySelector(".word").innerHTML = word
+    }
+
+    const toggleLog = () => {
+        document.querySelector('.list').classList.toggle('hidden')
+    }
+
+    const welcomeMessage = () => {
+        const message = "Welcome to word typing 👋\n\nThis application is training you to type individual words faster. You will see that your typing is usually always getting stuck on the same words or letter combinations. You might always make the same mistakes. Take your time and only move to the next word once you have achieved the right typing speed for the current word.\n\nControls:\n[Space] or [Enter] to complete a word.\n[Esc] to move on to a next word\n\nClick [wpm] to set your target speed. The default is quite low but you might still find words that you can't type within the time limit.\n\nClick [log] to see a log of your individual attempts.\n\nHave fun! 💻"
+        console.log(message)
+    }
+
+    window.settings = settings
+    window.toggleLog = toggleLog
+    window.onload = () => {
+        document.querySelector('[autofocus]').focus() // contenteditable does not allow autofocus
+    }
+
+    once()
+    welcomeMessage()
+
+</script>
+
+</html>
