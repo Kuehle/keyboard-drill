@@ -33,6 +33,10 @@
             color: black;
         }
 
+        .next {
+            text-align: right;
+        }
+
         .input {
             border-bottom: 1px dashed grey;
         }
@@ -40,6 +44,13 @@
         .input:focus {
             border: none;
             border-bottom: 1px dashed black;
+        }
+
+        .help {
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 1rem;
         }
 
         .settings {
@@ -100,6 +111,7 @@
 </head>
 
 <body>
+    <button class="help" onclick="help()">?</button>
     <table>
         <tbody class="list hidden">
             <tr>
@@ -111,6 +123,7 @@
     </table>
     <div class="content">
         <div>
+            <div class="next"></div>
             <div class="word big"></div>
             <div contenteditable class="input big" autofocus><br /></div>
         </div>
@@ -141,26 +154,46 @@
         setSpeed(temp)
     }
 
-    const once = (oldWord) => {
+    const help = () => {
+        const helpText = `Select your target WPM by clicking on the WPM in the lower left corner.
+
+Type the individual words as fast as possible. Once you’ve typed it fast enough for the selected speed, you get presented with the next one. 
+
+Confirm with [Space] or [Enter]
+
+If a word is to hard right now with the selected speed, adjust the speed or press [Esc] to skip.`
+        alert(helpText)
+    }
+
+    const once = (currentWord, next) => {
         resetInput()
-        const nextWord = oldWord || sample(words)
-        setWord(nextWord)
+        const word = currentWord || sample(words)
+        const nextWord = next || sample(words)
+        setWord(word)
+        setNextWord(nextWord)
         let timer = undefined
         const validate = (ev) => {
             if (ev.key == 'Escape') {
-                once()
+                once(nextWord, sample(words))
             }
             if (ev.key == 'Enter' || ev.key == ' ') { ev.preventDefault() }
             if (!timer) {
                 timer = performance.now()
             }
+            if (ev.key == 'Backspace' && getInput().length <= 1) {
+                timer = undefined
+            }
 
-            if ((ev.key == "Enter" || ev.key == " ") && nextWord == getInput()) {
+            if ((ev.key == "Enter" || ev.key == " ") && word == getInput()) {
                 const duration = Math.ceil(performance.now() - timer)
-                addToList(nextWord, duration)
+                addToList(word, duration)
                 document.querySelector(".input").removeEventListener('keydown', validate)
 
-                once(duration > THRESHOLD * nextWord.length ? nextWord : undefined)
+                if (duration > THRESHOLD * word.length) {
+                    once(word, nextWord)
+                } else {
+                    once(nextWord, sample(words))
+                }
             }
         }
 
@@ -187,6 +220,10 @@
         document.querySelector(".word").innerHTML = word
     }
 
+    const setNextWord = (nextWord) => {
+        document.querySelector(".next").innerHTML = nextWord
+    }
+
     const toggleLog = () => {
         document.querySelector('.list').classList.toggle('hidden')
     }
@@ -197,6 +234,7 @@
     }
 
     window.settings = settings
+    window.help = help
     window.toggleLog = toggleLog
     window.onload = () => {
         document.querySelector('[autofocus]').focus() // contenteditable does not allow autofocus
