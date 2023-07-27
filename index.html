@@ -167,14 +167,17 @@ If a word is to hard right now with the selected speed, adjust the speed or pres
 
     const once = (currentWord, next) => {
         resetInput()
-        const word = currentWord || sample(words)
-        const nextWord = next || sample(words)
+        // sample from words connected with bad_words
+        const hardWords = JSON.parse(localStorage.getItem("hard-words")|| "[]")
+        const pickHardWord = (Math.random() < .2) && hardWords.length
+        const word = currentWord || sample(pickHardWord ? hardWords : words)
+        const nextWord = next || sample(pickHardWord ? hardWords : words)
         setWord(word)
         setNextWord(nextWord)
         let timer = undefined
         const validate = (ev) => {
             if (ev.key == 'Escape') {
-                once(nextWord, sample(words))
+                once(nextWord)
             }
             if (ev.key == 'Enter' || ev.key == ' ') { ev.preventDefault() }
             if (!timer) {
@@ -190,9 +193,10 @@ If a word is to hard right now with the selected speed, adjust the speed or pres
                 document.querySelector(".input").removeEventListener('keydown', validate)
 
                 if (duration > THRESHOLD * word.length) {
+                    localStorage.setItem("hard-words", JSON.stringify(Array.from(new Set([...JSON.parse(localStorage.getItem("hard-words") || "[]"), word]))))
                     once(word, nextWord)
                 } else {
-                    once(nextWord, sample(words))
+                    once(nextWord)
                 }
             }
         }
@@ -244,5 +248,6 @@ If a word is to hard right now with the selected speed, adjust the speed or pres
     welcomeMessage()
 
 </script>
+
 
 </html>
